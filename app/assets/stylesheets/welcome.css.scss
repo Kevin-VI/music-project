@@ -1,0 +1,88 @@
+// Place all the styles related to the welcome controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+html, body {
+  margin: -20px 0 0 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Open Sans', sans-serif;
+  margin-top: -10px;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+#nav-brand > h2 {
+  padding: 30px 0 0 50px;
+  font-size: 20px;
+  color: rgb(232, 98, 34);
+  text-shadow: 1px 1px 10px white;
+}
+#nav-brand > p {
+  padding-left: 50px;
+  font-size: 12px;
+  color: rgb(232, 98, 34);
+  text-shadow: 1px 1px 10px white;
+}
+
+.bg {
+  position: fixed;
+  height: 100%;
+  min-width: 100%;
+  z-index: -999;
+  opacity: 0.95;
+}
+
+.content {
+  padding-bottom: 40px;
+}
+
+#presentation {
+  padding-top: 100px;
+}
+
+#presentation h1 {
+  font-size: 3em;
+  color: white;
+  text-shadow: 1px 1px 20px rgb(0, 0, 0);
+}
+
+.connect {
+  width: 290px;
+  margin-top: 70px;
+  padding: 30px 30px 50px;
+  border-radius: 5px;
+
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(232, 98, 34, 0.5);
+}
+
+.connect > h3 {
+  color: white;
+  text-shadow: 1px 1px 20px rgb(0, 0, 0);
+}
+
+.border-50 {
+  border-radius: 50%;
+}
+
+footer {
+  position:absolute;
+  bottom:0;
+  left:0;
+  height: 40px;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+footer li {
+  color: white;
+}
+
+.btn-footer, .btn-footer:hover, .btn-footer:focus {
+  background-color: rgba(223, 223, 223, 0);
+  border-color: rgba(223, 223, 223, 0);
+}
+

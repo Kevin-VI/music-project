@@ -1,0 +1,64 @@
+// Place all the styles related to the bookmarklets controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.title-welcome {
+  margin-bottom: -10px;
+  font-family: 'Quicksand', 'Open-sans', sans-serif;
+  font-size: 24px;
+  color: rgb(252, 98, 34);
+  font-weight: bolder;
+}
+
+.title-start {
+  margin: 20px 0px 35px;
+  font-family: 'Quicksand', 'Open-sans', sans-serif;
+  font-size: 24px;
+  line-height: 30px;
+}
+.arrow-start {
+  margin-top: 45px;
+  margin-left: 15px;
+}
+.extension-start {
+  margin: 15px 0px;
+  padding-left: 5px;
+  width: 250px;
+  font-family: 'Quicksand', 'Open-sans', sans-serif;
+  font-size: 16px;
+  line-height: 25px;
+}
+.btn-extension {
+  margin-left: 5px;
+  padding: 15px 25px;
+  font-size: 18px;
+  color: white;
+  background-color: rgb(252, 98, 34);
+  border-radius: 0;
+}
+.photo-gif {
+  margin-top: 5px;
+  width: 400px;
+  border: 1px solid #E2E2E2;
+}
+
+.four-steps {
+  margin-top: 40px;
+  margin-bottom: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: #F7B529;
+  border-radius: 5px;
+}
+.title-steps {
+  font-family: 'Quicksand', 'Open-sans', sans-serif;
+  font-size: 18px;
+  line-height: 25px;
+  color: #FFF;
+  font-weight: bold;
+}
+.text-steps {
+  color: #FFF;
+  font-family: 'Quicksand', 'Open-sans', sans-serif;
+  font-size: 18px;
+}

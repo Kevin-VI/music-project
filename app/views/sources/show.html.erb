@@ -1,0 +1,7 @@
+<%= render partial: "sources/navbar" %>
+
+<% if params[:friend_id] == nil %>
+ <%= render partial: "sources/show/show_classic" %>
+<% else %>
+  <%= render partial: "sources/show/show_friend" %>
+<% end %>

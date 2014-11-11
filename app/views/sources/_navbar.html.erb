@@ -1,0 +1,194 @@
+<!-- Fixed navbar start -->
+<div class="navbar navbar-tshop navbar-fixed-top megamenu" role="navigation">
+
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="sr-only"> Toggle navigation </span> <span class="icon-bar"> </span> <span class="icon-bar"> </span> <span class="icon-bar"> </span> </button>
+      <%= link_to(image_tag("logo.png", :alt => "VIBE IN", :width => "120"), sources_path, :class => "navbar-brand") %>
+
+      <!-- this part for mobile -->
+      <div class="search-box pull-right hidden-lg hidden-md hidden-sm">
+        <div class="input-group">
+          <%= button_to destroy_user_session_path, method: :delete, :class => "btn btn-nobg" do %>
+            <i class="fa fa-power-off"></i>
+          <% end %>
+        </div>
+      </div>
+      <div class="search-box pull-right hidden-lg hidden-md hidden-sm">
+        <div class="input-group">
+          <%= link_to bookmarklets_path, method: :get, :class => "btn btn-nobg" do %>
+            <i class="fa fa-question"></i>
+          <% end %>
+        </div>
+      </div>
+      <% if @source.id == nil %>
+        <div class="search-box pull-right hidden-lg hidden-md hidden-sm">
+          <div class="input-group">
+            <button class="btn btn-nobg getFullSearch" type="button"> <i class="fa fa-plus"> </i> </button>
+          </div>
+          <!-- /input-group -->
+        </div>
+      <% end %>
+
+    </div>
+
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"> <%= link_to "Home", sources_path %> </li>
+
+        <!-- change width of megamenu = use class > megamenu-fullwidth, megamenu-60width, megamenu-40width -->
+        <li class="dropdown megamenu-40width "> <a data-toggle="dropdown" class="dropdown-toggle" href="#"> FRIENDS <b class="active caret"> </b> </a>
+          <ul class="dropdown-menu">
+            <li class="megamenu-content">
+
+              <!-- megamenu-content -->
+               <ul class="list-unstyled list-inline"><% @friends.each do |fb_friend| %>
+                <% friend = User.where(:uid => fb_friend.friend_uid).first %>
+                <% if friend != nil && friend.sources.length > 1 %>
+
+                  <div class="col-xs-12">
+                    <div class="friend-box">
+                      <li class="friend-infos"><%= link_to friend_sources_path(fb_friend.id) do %>
+                        <%= image_tag friend.picture, class: 'photo-fb' %>
+                      <% end %>
+                      <%= link_to friend.name, friend_sources_path(fb_friend.id), class: 'name-fb' %></li>
+
+                      <li class="text-center"><h4 class="api-time">
+                        <%= friend.musics.length %> morceaux de musique
+                      </h4></li>
+
+                    </div>
+                  </div>
+
+                <% end %>
+              <% end %>
+              </ul>
+
+          </ul>
+        </li>
+
+        <% if params[:friend_id] != nil && @source.id != nil %>
+          <li class="active"> <%= link_to @friend.first_name, friend_sources_path(params[:friend_id]) %> </li>
+        <% end %>
+      </ul>
+
+      <!--- this part will be hidden for mobile version -->
+      <div class="nav navbar-nav navbar-right hidden-xs">
+        <div class="search-box">
+          <div class="input-group">
+            <%= button_to destroy_user_session_path, method: :delete, :class => "btn btn-nobg" do %>
+              <i class="fa fa-power-off"></i>
+            <% end %>
+          </div>
+        </div>
+       <div class="search-box">
+          <div class="input-group">
+            <%= link_to bookmarklets_path, method: :get, :class => "btn btn-nobg" do %>
+              <i class="fa fa-question"></i>
+            <% end %>
+          </div>
+        </div>
+
+        <!-- Button trigger modal -->
+        <% if @source.id == nil %>
+          <div class="search-box">
+            <div class="input-group">
+              <button class="btn btn-nobg getFullSearch" type="button"> <i class="fa fa-plus"> </i> </button>
+            </div>
+            <!-- /input-group -->
+          </div><!--/.search-box -->
+        <% end %>
+
+
+      </div><!--/.navbar-nav hidden-xs-->
+    </div><!--/.nav-collapse -->
+
+  </div> <!--/.container -->
+
+  <div class="search-full text-right"> <a class="pull-right search-close"> <i class=" fa fa-times-circle"> </i> </a>
+    <div class="searchInputBox pull-right">
+      <%= form_for(@source) do |f| %>
+          <%= text_field_tag :url, '', :class => 'search-input', :placeholder => "Copier l'url d'un morceau Youtube ou Soundcloud" %>
+          <%= f.submit "", :class => 'btn-nobg search-btn' do %>
+            <i class='fa fa-plus'>
+          <% end %>
+        <% end %>
+    </div>
+  </div>
+
+  <!--/.search-full-->
+
+  <% if params[:friend_id] != nil && @source.id == nil %>
+    <%= render partial: "sources/navbar_top_friend" %>
+  <% elsif @source.id == nil %>
+    <%= render partial: "sources/navbar_top" %>
+  <% else %>
+  <% end %>
+  <!--/.navbar-top-->
+
+</div>
+<!-- /.Fixed navbar  -->
+
+
+<!-- Modal Playlists -->
+<div class="modal fade" id="myModalPlaylist" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h3 class="modal-title-site text-center" id="myModalLabel">Garage à playlists</h3>
+        </div>
+        <div class="modal-body">
+
+          <h3>Vos playlists actuelles</h3>
+          <% @category = Category.new %>
+          <ul class="list-unstyled list-inline"><% current_user.categories.each do |category| %>
+            <li>
+              <%= link_to category.title, '#',:class => "btn btn-sm btn-category color-#{category.thumbnail}" %>
+              <%= link_to category_path(id: category.id), method: :delete, :class => "delete-category", data: {confirm: "Êtes-vous certain de vouloir supprimer cette playlist ?"} do %>
+                <i class="fa fa-times"></i>
+              <% end %>
+            </li>
+          <% end %>
+          </ul>
+
+          <h3>Créer une nouvelle playlist</h3>
+
+          <ul class="list-unstyled">
+            <%= form_for @category do |f| %>
+
+            <li>
+              <%= f.text_field :title, class: "form-control input", placeholder: "Choisir un titre chanmé" %>
+            </li></br>
+
+            <h4>Choisir une couleur</h4>
+
+            <li>
+              <%= f.radio_button :thumbnail, "1DD2AF" %>
+              <%= label "", nil, class: "color-selector color-1DD2AF" %>
+            </li>
+            <li>
+              <%= f.radio_button :thumbnail, "2BBE68" %>
+              <%= label "", nil, class: "color-selector color-2BBE68" %>
+            </li>
+            <li>
+              <%= f.radio_button :thumbnail, "2E8DCC" %>
+              <%= label "", nil, class: "color-selector color-2E8DCC" %>
+            </li>
+            <li>
+              <%= f.radio_button :thumbnail, "F1C40F" %>
+              <%= label "", nil, class: "color-selector color-F1C40F" %>
+            </li>
+            <li>
+              <%= f.radio_button :thumbnail, "EA6153" %>
+              <%= label "", nil, class: "color-selector color-EA6153" %>
+            </li>
+          </ul>
+
+              <%= f.submit "Valider", :class => "btn btn-block btn-lg btn-success" %>
+            <% end %>
+        </div>
+      </div>
+    </div>
+</div>
